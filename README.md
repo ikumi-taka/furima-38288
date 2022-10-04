@@ -54,7 +54,7 @@
 
 | Column           | Type         | Options                        |
 | ---------------- | ------------ | ------------------------------ |
-| post_code        | integer      | null: false                    |
+| post_code        | string       | null: false                    |
 | shipping_from_id | integer      | null: false                    |
 | city             | string       | null: false                    |
 | block_number     | string       | null: false                    |
