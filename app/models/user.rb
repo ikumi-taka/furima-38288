@@ -4,14 +4,21 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  validates :nickname, presence: true
-  validates :last_name, presence: true
-  validates :first_name, presence: true
-  validates :last_name_kana, presence: true
-  validates :first_name_kana, presence: true
-  validates :birthday, presence: true
+  has_many :orders
+  has_many :items
 
+  with_options presence: true do
+    validates :nickname
+    validates :last_name, format: { with: /\A[ぁ-んァ-ンー-龥々ー]/ }  #全角漢字ひらがなカタカナ入力を設定
+    validates :first_name, format: { with: /\A[ぁ-んァ-ンー-龥々ー]/ }  #全角漢字ひらがなカタカナ入力を設定
+    validates :last_name_kana, format: { with: /\A[ァ-ヶー－]+\z/ }  #全角カタカナ入力を設定
+    validates :first_name_kana, format: { with: /\A[ァ-ヶー－]+\z/ }  #全角カタカナ入力を設定
+    validates :birthday
+    with_options uniqueness: true do
+      validates :email
+    end
 
-has_many :orders
-has_many :items
+    VALID_PASSWORD_REGEX = /\A(?=.*?[a-z])(?=.*?[\d])[a-z\d]+\z/i.freeze
+    validates_format_of :password, with: VALID_PASSWORD_REGEX
+  end
 end
