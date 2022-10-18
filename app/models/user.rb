@@ -15,10 +15,11 @@ class User < ApplicationRecord
     validates :first_name_kana, format: { with: /\A[ァ-ヶー－]+\z/ }  #全角カタカナ入力を設定
     validates :birthday
     with_options uniqueness: true do
-      validates :email
+      validates :email, uniqueness: { case_sensitive: true }
     end
 
     VALID_PASSWORD_REGEX = /\A(?=.*?[a-z])(?=.*?[\d])[a-z\d]+\z/i.freeze
     validates_format_of :password, with: VALID_PASSWORD_REGEX
+
   end
 end
