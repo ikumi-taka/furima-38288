@@ -4,7 +4,6 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-
   with_options presence: true do
     validates :nickname
     validates :last_name, format: { with: /\A[ぁ-んァ-ンー-龥々ー]/ } # 全角漢字ひらがなカタカナ入力を設定
