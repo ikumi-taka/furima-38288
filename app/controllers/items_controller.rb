@@ -2,9 +2,21 @@ class ItemsController < ApplicationController
   before_action :authenticate_user!, except: [:index] # ログインしていないユーザーをログインページの画面に促す
 
   def index
+    @items = Item.includes(:user).order("created_at DESC")
   end
 
-  private
+  def new
+    @item = Item.new
+  end
+
+  def create
+    @item = Item.new(items_params)
+    if @item.save
+      redirect_to root_path
+    else
+      render :new
+    end
+  end
 
   private
   def items_params

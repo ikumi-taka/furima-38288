@@ -1,5 +1,5 @@
 class Item < ApplicationRecord
-  extend ActiveHAsh::Associations::ActiveRecordExtensions
+  extend ActiveHash::Associations::ActiveRecordExtensions
   belongs_to :category
   belongs_to :item_status
   belongs_to :shipping_cost
@@ -9,11 +9,11 @@ class Item < ApplicationRecord
   has_one_attached :image
 
   with_options numericality: { other_than: 1, message: "can't be blank" } do  #選択肢「---」が選ばれているときは保存しない
-    validates :category
-    validates :item_status
-    validates :shipping_cost
-    validates :shipping_from
-    validates :shipping_time
+    validates :category_id
+    validates :item_status_id
+    validates :shipping_cost_id
+    validates :shipping_from_id
+    validates :shipping_time_id
   end
   
   with_options presence: true do
