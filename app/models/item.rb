@@ -1,4 +1,9 @@
 class Item < ApplicationRecord
+  has_one :order
+  belongs_to :user
+
+  has_one_attached :image
+
   extend ActiveHash::Associations::ActiveRecordExtensions
   belongs_to :category
   belongs_to :item_status
@@ -6,7 +11,6 @@ class Item < ApplicationRecord
   belongs_to :shipping_from
   belongs_to :shipping_time
 
-  has_one_attached :image
 
   with_options numericality: { other_than: 1, message: "can't be blank" } do  #選択肢「---」が選ばれているときは保存しない
     validates :category_id
@@ -25,7 +29,7 @@ class Item < ApplicationRecord
     validates :shipping_cost_id
     validates :shipping_from_id
     validates :shipping_time_id
-    validates :user_id
-    validates :price, format: { with: /\A[0-9]+\z/ }, numericality: { only_integer: true, greater_than_or_equal_to: 300, less_than_or_equal_to: 9999999 }
+    validates :price, numericality: { only_integer: true, greater_than_or_equal_to: 300, less_than_or_equal_to: 9999999 }
   end
+
 end
