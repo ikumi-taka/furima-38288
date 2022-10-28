@@ -58,27 +58,27 @@ RSpec.describe Item, type: :model do
         expect(@item.errors.full_messages).to include("Description can't be blank")
       end
       it 'カテゴリーが「---」を選択していると登録できない' do
-        @item.category_id = ''
+        @item.category_id = '1'
         @item.valid?
         expect(@item.errors.full_messages).to include("Category can't be blank")
       end
       it '商品の状態が「---」を選択していると登録できない' do
-        @item.item_status_id = ''
+        @item.item_status_id = '1'
         @item.valid?
         expect(@item.errors.full_messages).to include("Item status can't be blank")
       end
       it '配送料の負担が「---」を選択していると登録できない' do
-        @item.shipping_cost_id = ''
+        @item.shipping_cost_id = '1'
         @item.valid?
         expect(@item.errors.full_messages).to include("Shipping cost can't be blank")
       end
       it '発送元の地域が「---」を選択していると登録できない' do
-        @item.shipping_from_id = ''
+        @item.shipping_from_id = '1'
         @item.valid?
         expect(@item.errors.full_messages).to include("Shipping from can't be blank")
       end
       it '発送までの日数が「---」を選択していると登録できない' do
-        @item.shipping_time_id = ''
+        @item.shipping_time_id = '1'
         @item.valid?
         expect(@item.errors.full_messages).to include("Shipping time can't be blank")
       end
@@ -96,8 +96,6 @@ RSpec.describe Item, type: :model do
         @item.price = 10_000_000
         @item.valid?
         expect(@item.errors.full_messages).to include('Price must be less than or equal to 9999999')
-      end
-      it '' do
       end
     end
   end
