@@ -37,14 +37,13 @@ RSpec.describe Item, type: :model do
     end
     context '商品出品登録ができないとき' do
       it 'ログインしていないと出品登録をすることができない' do
-        @item.user_id = 'nil'
+        @item.user = nil
         @item.valid?
         expect(@item.errors.full_messages).to include('User must exist')
       end
       it '商品画像を1枚添付していないと登録できない' do
         @item.image = nil
         @item.valid?
-
         expect(@item.errors.full_messages).to include("Image can't be blank")
       end
       it '商品名が空だと登録できない' do
@@ -96,6 +95,11 @@ RSpec.describe Item, type: :model do
         @item.price = 10_000_000
         @item.valid?
         expect(@item.errors.full_messages).to include('Price must be less than or equal to 9999999')
+      end
+      it '価格に半角数字以外が含まれている場合は出品できない' do
+        @item.price = '１００００'
+        @item.valid?
+        expect(@item.errors.full_messages).to include('Price Half-width number')
       end
     end
   end
