@@ -1,5 +1,5 @@
 class ItemsController < ApplicationController
-  before_action :authenticate_user!, except: [:index] # ログインしていないユーザーをログインページの画面に促す
+  before_action :authenticate_user!, except: [:index, :show] # ログインしていないユーザーをログインページの画面に促す
 
   def index
     @items = Item.order('created_at DESC')
