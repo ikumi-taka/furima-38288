@@ -24,6 +24,18 @@ class ItemsController < ApplicationController
 
   def edit
     @item = Item.find(params[:id])
+    unless user_signed_in? && current_user.id == @item.user_id #ログイン中、他の出品者の編集ページに直接遷移しようとするとトップへ遷移する
+      redirect_to root_path
+    end
+  end
+
+  def update
+    @item = Item.find(params[:id])
+    if @item.update(items_params)
+      redirect_to item_path
+    else
+      render :edit
+    end
   end
 
   private
