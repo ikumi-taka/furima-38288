@@ -1,6 +1,6 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show] # ログインしていないユーザーをログインページの画面に促す
-  before_action :set_item, only: [:show, :edit, :update] #重複した記述をまとめる
+  before_action :set_item, only: [:show, :edit, :update, :destroy] #重複した記述をまとめる
 
 
   def index
@@ -34,6 +34,15 @@ class ItemsController < ApplicationController
       redirect_to item_path
     else
       render :edit
+    end
+  end
+
+  def destroy
+    if @item.user_id == current_user.id #ログイン状態の場合にのみ、自身が出品した商品情報を削除できる
+      @item.destroy
+      redirect_to root_path
+    else
+      redirect_to root_path
     end
   end
 
