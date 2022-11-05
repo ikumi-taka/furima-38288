@@ -24,7 +24,7 @@ class ItemsController < ApplicationController
   end
 
   def edit
-    unless user_signed_in? && current_user.id == @item.user_id #ログイン中、他の出品者の編集ページに直接遷移しようとするとトップへ遷移する
+    unless current_user.id == @item.user_id #ログイン中、他の出品者の編集ページに直接遷移しようとするとトップへ遷移する
       redirect_to root_path
     end
   end
