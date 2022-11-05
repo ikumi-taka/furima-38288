@@ -1,7 +1,7 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show] # ログインしていないユーザーをログインページの画面に促す
   before_action :set_item, only: [:show, :edit, :update, :destroy] #重複した記述をまとめる
-
+  before_action :redirect_to_root, only: [:edit, :destroy] #出品者以外はトップページに遷移するという記述をまとめる
 
   def index
     @items = Item.order('created_at DESC')
@@ -24,9 +24,6 @@ class ItemsController < ApplicationController
   end
 
   def edit
-    unless current_user.id == @item.user_id #ログイン中、他の出品者の編集ページに直接遷移しようとするとトップへ遷移する
-      redirect_to root_path
-    end
   end
 
   def update
@@ -38,12 +35,8 @@ class ItemsController < ApplicationController
   end
 
   def destroy
-    if @item.user_id == current_user.id #ログイン状態の場合にのみ、自身が出品した商品情報を削除できる
       @item.destroy
       redirect_to root_path
-    else
-      redirect_to root_path
-    end
   end
 
   private
@@ -55,5 +48,9 @@ class ItemsController < ApplicationController
 
   def set_item
     @item = Item.find(params[:id])
+  end
+
+  def redirect_to_root
+    redirect_to root_path if current_user.id != @item.user_id
   end
 end
