@@ -14,4 +14,11 @@ class OrderAddress
     validates :user_id
     validates :item_id
   end
+
+  def save
+    #購入情報を保存し変数orderに代入する
+    order = Order.create(user_id: user_id, item_id: item_id)
+    #住所を保存する
+    Address.create(post_code: post_code, shipping_from_id: shipping_from_id, city: city, block_number: block_number, building: building, phone_number: phone_number, order_id: order.id)
+  end
 end
