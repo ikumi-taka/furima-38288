@@ -1,6 +1,6 @@
 class OrderAddress
   include ActiveModel::Model
-  aatr_accessor :post_code, :shipping_from_id, :city, :block_number, :building, :phone_number, :order_id, :user_id, :item_id
+  attr_accessor :post_code, :shipping_from_id, :city, :block_number, :building, :phone_number, :user_id, :item_id
 
   with_options presence: true do
     #addressモデルのバリデーション
