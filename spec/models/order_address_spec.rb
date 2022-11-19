@@ -75,7 +75,7 @@ RSpec.describe OrderAddress, type: :model do
       it 'phone_numberが空だと保存できない' do
         @order_address.phone_number = ''
         @order_address.valid?
-        expect(@order_address.errors.full_messages).to include("Phone number can't be blank", "Phone number is valid")
+        expect(@order_address.errors.full_messages).to include("Phone number can't be blank")
       end
       it 'phone_numberは12桁以上だと保存できない' do
         @order_address.phone_number = '090123456789'
@@ -101,6 +101,10 @@ RSpec.describe OrderAddress, type: :model do
         @order_address.token = nil
         @order_address.valid?
         expect(@order_address.errors.full_messages).to include("Token can't be blank")
+      end
+      it '都道府県に「---」が選択されている場合は購入できない' do
+      end
+      it '電話番号が9桁以下では購入できない' do
       end
     end
   end

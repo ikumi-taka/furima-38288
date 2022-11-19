@@ -8,7 +8,7 @@ class OrderAddress
     validates :shipping_from_id, numericality: {other_than: 1, message: "can't be blank"}
     validates :city
     validates :block_number
-    validates :phone_number, format: {with: /\A[0-9]{11}\z/, message: "is valid"}
+    validates :phone_number, format: {with: /\A[0-9]{10,11}\z/, message: "is valid"}
 
     #ordeモデルのバリデーション
     validates :user_id
