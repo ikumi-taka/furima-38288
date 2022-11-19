@@ -3,7 +3,10 @@ require 'rails_helper'
 RSpec.describe OrderAddress, type: :model do
   describe '配送先情報の保存' do
     before do
-      @order_address = FactoryBot.build(:order_address)
+      user = FactoryBot.create(:user)
+      item = FactoryBot.create(:item)
+      @order_address = FactoryBot.build(:order_address, user_id: user.id, item_id: item.id)
+      sleep(1)
     end
 
     context '配送先情報の保存ができるとき' do
@@ -103,8 +106,14 @@ RSpec.describe OrderAddress, type: :model do
         expect(@order_address.errors.full_messages).to include("Token can't be blank")
       end
       it '都道府県に「---」が選択されている場合は購入できない' do
+        @order_address.shipping_from_id = 1
+        @order_address.valid?
+        expect(@order_address.errors.full_messages).to include("Shipping from can't be blank")
       end
       it '電話番号が9桁以下では購入できない' do
+        @order_address.phone_number = '090123456'
+        @order_address.valid?
+        expect(@order_address.errors.full_messages).to include("Phone number is valid")
       end
     end
   end
