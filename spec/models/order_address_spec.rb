@@ -17,37 +17,6 @@ RSpec.describe OrderAddress, type: :model do
         @order_address.building = ''
         expect(@order_address).to be_valid
       end
-      it 'post_codeはハイフンを含んだ正しい形式で入力されていれば保存できる' do
-        @order_address.post_code = '123-4567'
-        expect(@order_address).to be_valid
-      end
-      it 'shipping_from_idは「---」以外を選択していれば保存できる' do
-        @order_address.shipping_from_id = 2
-        expect(@order_address).to be_valid
-      end
-      it 'cityが空でなければ保存できる' do
-        @order_address.city = '札幌市'
-        expect(@order_address).to be_valid
-      end
-      it 'block_numberが空でなければ保存できる' do
-        @order_address.block_number = '1-1'
-        expect(@order_address).to be_valid
-      end
-      it 'phone_numberが11桁以内で入力且つハイフンなしであれば保存できる' do
-        @order_address.phone_number = '09012345678'
-        expect(@order_address).to be_valid
-      end
-      it 'user_idが空でなければ保存できる' do
-        @order_address.user_id = 1
-        expect(@order_address).to be_valid
-      end
-      it 'item_idが空でなければ保存できる' do
-        @order_address.item_id = 1
-        expect(@order_address).to be_valid
-      end
-      it 'tokenがあれば保存できる' do
-        expect(@order_address).to be_valid
-      end
     end
     context '配送先情報の保存ができないとき' do
       it 'post_codeが空だと保存できない' do
