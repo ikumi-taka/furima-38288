@@ -1,13 +1,15 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_order, only: [:index, :create]  #重複した記述まとめ
+  #before_action :move_to_root, only: [:index, :create]
   def index
-    #@item = Item.find(params[:item_id])
     @order_address = OrderAddress.new
+    if current_user == @item.user
+      redirect_to root_path
+    end
   end
 
   def create
-    #@item = Item.find(params[:item_id])
     @order_address = OrderAddress.new(order_params)
     if @order_address.valid?
       pay_item
@@ -36,5 +38,10 @@ class OrdersController < ApplicationController
     @item = Item.find(params[:item_id])
   end
 
+  #def move_to_root
+    #unless user_signed_in?
+      #redirect_to root_path
+    #end
+  #end
 end
 
