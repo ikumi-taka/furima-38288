@@ -31,10 +31,10 @@ development:
 test:
   <<: *default
   adapter: mysql2
+  database: furima_38288_production
   username: root
-  password:
-  host: localhost
-  database: furima_38288_test
+  password: <%= ENV['DATABASE_PASSWORD'] %>
+  socket: /var/lib/mysql/mysql.sock
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
